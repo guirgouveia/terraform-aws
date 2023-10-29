@@ -1,0 +1,62 @@
+.idea/
+inventory/local*.ini
+*.retry
+*.iml
+
+## VSCode
+.vscode/
+*.code-workspace
+
+## Terraform
+
+# Local .terraform directories
+**/.terraform/*
+
+# Local .terragrunt directories
+**/.terragrunt-cache/*
+
+# Local client IP file
+terragrunt/client_ip.yaml
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# terraform variables
+terraform.tfvars
+
+# Crash log files
+crash.log
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+#
+# !example_override.tf
+
+# ignore terragrunt cache
+.terragrunt-cache/
+
+# Ignore any backend partial configurations as they usually contain secret information
+*.backend.tpl
+
+# Ignore override files that might exist locally
+overrides.yaml
+*-overrides.yaml
+*-overrides.yaml
+
+# Ignore client IP file
+client_ip.yaml
+
+# Direnv
+.direnv/
+.envrc
+
+# trunk.io
+.trunk/
+**/.terraform.lock.hcl
