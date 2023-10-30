@@ -1,5 +1,5 @@
 module "vpc" {
-  source                            = "git@github.com:guirgouveia/terraform-aws.git/aws//vpc?ref=refs/tags/v0.1.1"
+  source                            = "github.com/guirgouveia/terraform-modules//aws/vpc?ref=v0.1.1"
   create_vpc                        = var.create_vpc
   vpc_name                          = var.vpc_name
   vpc_cidr_block                    = var.vpc_cidr_block
@@ -12,7 +12,7 @@ module "vpc" {
 
 
 module "eks" {
-  source = "git@github.com:guirgouveia/terraform-aws.git/aws//eks?ref=refs/tags/v0.1.1"
+  source = "github.com/guirgouveia/terraform-modules//aws/eks?ref=v0.1.1"
 
   cluster_name = var.cluster_name
 
