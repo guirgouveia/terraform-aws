@@ -47,7 +47,7 @@ Hence, the EKS cluster is not exposed to the internet. Instead, we are using a N
 
 This project includes default values for all variables, so no variable input is necessary to follow this exact example. 
 
-However, you can change the values of the variables to customize the resources name, instance types, etc.
+However, you can change the values of the variables to customize the resources name, instance types, etc. using a terraform.tfvars file, enviroment variables or CLI. Read more about variables [here](https://developer.hashicorp.com/terraform/language/values/variables).
 
 ### Get Started
 
