@@ -1,30 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [Introduction](#introduction)
-  - [Quick Start](#quick-start)
-    - [Requirements and Version Constraints](#requirements-and-version-constraints)
-    - [Authentication and Configuration](#authentication-and-configuration)
-    - [Terraform State File Locking with S3 and DynamoDB](#terraform-state-file-locking-with-s3-and-dynamodb)
-    - [Networking](#networking)
-    - [Variables](#variables)
-    - [Get Started](#get-started)
-  - [DevSecOps](#devsecops)
-    - [Static Code Analysis with Trivy](#static-code-analysis-with-trivy)
-      - [Running Trivy](#running-trivy)
-        - [Scanning the plan file](#scanning-the-plan-file)
-        - [Scannig repositories](#scannig-repositories)
-      - [VS Code Plugin](#vs-code-plugin)
-      - [CICD](#cicd)
-      - [Trivy Tutorials](#trivy-tutorials)
-    - [Inputs and Outputs](#inputs-and-outputs)
-  - [Future Improvements](#future-improvements)
-  - [Suggestions](#suggestions)
-  - [Reference](#reference)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # Introduction
 
 This project aims to create an Elastic Kubernetes Cluster (EKS) in AWS using Infrastructure as Code with Terraform. It contains two modules, one for network related resources and one for the EKS and its dependencies. We are following the AWS Well-Architected Framework to ensure that our infrastructure is secure, reliable, efficient, and cost-effective.
