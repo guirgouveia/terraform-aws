@@ -37,6 +37,16 @@ To create them, run the script `create-backend.sh` in the `scripts` folder. You 
 
 Read more about state file locking with S3 at [the S3 backend documentation](https://developer.hashicorp.com/terraform/language/settings/backends/s3).
 
+### External Modules
+
+This project uses external modules from my collection of modules in the [terraform-aws repository](https://github.com/guirgouveia/terraform-modules) by declaring the repository as a [Terraform Module Source](https://developer.hashicorp.com/terraform/language/modules/sources#github) and specifying the module name and version inside of the repository, as follows:
+
+```hcl
+module "vpc" {
+  source = "github.com/guirgouveia/terraform-modules//vpc?ref=v1.0.0"
+}
+```
+
 ### Networking
 
 The cluster spans two Availability Zones and uses two subnets, one in each Availability Zone. The subnets are private and are not exposed to the internet. The EKS cluster is deployed in the private subnets and the endpoint is only exposed internally.
