@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "./modules/vpc" # Path to your local VPC module
+  source = "git@github.com:guirgouveia/terraform-aws.git//aws/vpc?ref=v0.1.0"
 
   create_vpc                        = var.create_vpc
   vpc_name                          = var.vpc_name
@@ -13,7 +13,7 @@ module "vpc" {
 
 
 module "eks" {
-  source = "./modules/eks" # Path to your local EKS module
+  source = "git@github.com:guirgouveia/terraform-aws.git//aws/eks?ref=v0.1.0"
 
   cluster_name = var.cluster_name
 
