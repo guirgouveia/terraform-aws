@@ -39,7 +39,7 @@ Read more about state file locking with S3 at [the S3 backend documentation](htt
 
 ### External Modules
 
-This project uses external modules from my collection of modules in the [terraform-aws repository](https://github.com/guirgouveia/terraform-modules) by declaring the repository as a [Terraform Module Source](https://developer.hashicorp.com/terraform/language/modules/sources#github) and specifying the module name and version inside of the repository, as follows:
+This project uses external modules from my collection of modules in the [terraform-aws repository](https://github.com/guirgouveia/terraform-modules) by declaring the repository as a [Terraform Module Source](https://developer.hashicorp.com/terraform/language/modules/sources#github) and specifying the module [subdirectory path](https://developer.hashicorp.com/terraform/language/modules/sources#modules-in-package-sub-directories) and version inside of the repository, as follows:
 
 ```hcl
 module "vpc" {
