@@ -35,8 +35,7 @@ resource "aws_eks_node_group" "main" {
   }
 
   update_config {
-    max_unavailable            = 1
-    max_unavailable_percentage = 0
+    max_unavailable_percentage = 50
   }
 
   depends_on = [
