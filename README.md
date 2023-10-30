@@ -1,13 +1,31 @@
-# Project Name
-
-## Table of Contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Introduction](#introduction)
-- [Quick Start](#quick-start)
-- [Inputs and Outputs](#inputs-and-outputs)
-- [Reference](#reference)
+  - [Quick Start](#quick-start)
+    - [Requirements and Version Constraints](#requirements-and-version-constraints)
+    - [Authentication and Configuration](#authentication-and-configuration)
+    - [Terraform State File Locking with S3 and DynamoDB](#terraform-state-file-locking-with-s3-and-dynamodb)
+    - [Networking](#networking)
+    - [Variables](#variables)
+    - [Get Started](#get-started)
+  - [DevSecOps](#devsecops)
+    - [Static Code Analysis with Trivy](#static-code-analysis-with-trivy)
+      - [Running Trivy](#running-trivy)
+        - [Scanning the plan file](#scanning-the-plan-file)
+        - [Scannig repositories](#scannig-repositories)
+      - [VS Code Plugin](#vs-code-plugin)
+      - [CICD](#cicd)
+      - [Trivy Tutorials](#trivy-tutorials)
+    - [Inputs and Outputs](#inputs-and-outputs)
+  - [Future Improvements](#future-improvements)
+  - [Suggestions](#suggestions)
+  - [Reference](#reference)
 
-## Introduction
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Introduction
 
 This project aims to create an Elastic Kubernetes Cluster (EKS) in AWS using Infrastructure as Code with Terraform. It contains two modules, one for network related resources and one for the EKS and its dependencies. We are following the AWS Well-Architected Framework to ensure that our infrastructure is secure, reliable, efficient, and cost-effective.
 
@@ -42,9 +60,7 @@ To prevent conflicts when working in a team, we are using the Terraform S3 backe
 
 We are also using a DynamoDB table for locking to ensure that only one person can make changes to a resource at a time, preventing conflicts and ensuring that changes are applied in the correct order.
 
-To create them, run the script `create-backend.sh` in the `scripts` folder.
-
-You will need to change the values of the variables in the script to match your environment, or declare them as environment variables.
+To create them, run the script `create-backend.sh` in the `scripts` folder. You will need to change the values of the variables in the script to match your environment, or declare them as environment variables.
 
 Read more about state file locking with S3 at [the S3 backend documentation](https://developer.hashicorp.com/terraform/language/settings/backends/s3).
 
@@ -98,12 +114,24 @@ trivy fs --scanners secret, config \
 
 You can run the commnad for specific files or directories or even the whole project. Read the manual for the complete list of options.
 
+##### Scanning the plan file
+
 It's also a good practice to run Trivy on your plan file, so you can check for vulnerabilities and misconfigurations as they would be. To do so, run the following commands:
 
 ```bash
 terraform plan --out tfplan.binary
 terraform show -json tfplan.binary > tfplan.json # Converts the binary plan file to JSON
 trivy config ./tfplan.json -o trivy-plan-scan.json   # Scans the plan file
+```
+
+##### Scannig repositories
+
+It's also always good to verify if there's a secret vulnerability in the remote repository by running:
+
+```
+trivy repo \
+--scanners secret \
+https://github.com/guirgouveia/terraform-aws
 ```
 
 #### VS Code Plugin
@@ -126,29 +154,17 @@ trivy fs --scanners secret, config \
 
 Refer to the [Trivy tutorials](https://aquasecurity.github.io/trivy/v0.46/tutorials/misconfiguration/terraform/) about Terraform scanning for more information. 
 
-### Inputs
+### Inputs and Outputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|----------|
-| cluster_name | The name of the EKS cluster. | `string` | `"example-eks-cluster"` | No |
-| vpc_id | The ID of the VPC where the EKS cluster will be created. | `string` | `"example-vpc-id"` | No |
-| subnets | A list of subnet IDs where the EKS cluster will be created. | `list(string)` | `["example-subnet-id-1", "example-subnet-id-2"]` | No |
-| tags | A map of tags to apply to all resources. | `map(string)` | `{}` | No |
-| node_group_name | The name of the EKS node group. | `string` | `"example-node-group"` | No |
-| node_group_instance_type | The instance type for the EKS node group. | `string` | `"t3.medium"` | No |
+Read the automatically generated [ documentation](./terraform-docs.md) for inputs and outputs description and usage. 
 
-### Outputs
-
-| Name | Description |
-|------|-------------|
-| kubeconfig | The kubectl configuration for the EKS cluster. |
-| config_map_aws_auth | The ConfigMap for the AWS IAM Authenticator for Kubernetes. |
-| eks_iam_role_arn | The ARN of the IAM role used by the EKS cluster. |
+This documentation is generated by the CI pipeline with [terraform-docs](https://terraform-docs.io) on every PR merge to the main branch. 
 
 ## Future Improvements
 
 - Keep the Terraform code DRY with Terragrunt.
 - Use external git repository for the Terraform modules.
+- Generate documentation with terraform-docs
 - Create IaC tests with native Terraform test framework or Terratest.
 - Configure [RBAC](https://docs.aws.amazon.com/eks/latest/userguide/security_iam_troubleshoot.html#security-iam-troubleshoot-cannot-view-nodes-or-workloads) for the EKS cluster. 
 - Configure [Fargate](https://docs.aws.amazon.com/eks/latest/userguide/fargate.html) for the EKS cluster.
