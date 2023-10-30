@@ -1,6 +1,6 @@
 # Introduction
 
-This project aims to create an Elastic Kubernetes Cluster (EKS) in AWS using Infrastructure as Code with Terraform. It contains two modules, one for network related resources and one for the EKS and its dependencies. We are following the AWS Well-Architected Framework to ensure that our infrastructure is secure, reliable, efficient, and cost-effective.
+This project aims to create an Elastic Kubernetes Cluster (EKS) in AWS using Infrastructure as Code with Terraform. It contains two modules, one for the main network resources and one for the EKS and its dependencies, such as roles, security groups, NACLs and IAM roles. This AWS setup follows the AWS Well-Architected Framework to ensure that the infrastructure is secure, reliable, efficient, and cost-effective.
 
 The [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) is a set of best practices and guidelines for designing and operating reliable, secure, efficient, and cost-effective systems in the cloud. It provides a consistent approach for customers and partners to evaluate architectures, and provides guidance to help implement designs that will scale with your application needs over time.
 

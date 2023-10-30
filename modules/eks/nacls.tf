@@ -24,6 +24,8 @@ resource "aws_network_acl" "eks-cluster-nacl" {
     protocol   = "icmp"
     action     = "allow"
     cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
   }
 
   egress {
@@ -49,6 +51,8 @@ resource "aws_network_acl" "eks-cluster-nacl" {
     protocol   = "icmp"
     action     = "allow"
     cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
   }
 }
 
