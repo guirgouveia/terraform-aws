@@ -65,67 +65,31 @@ To destroy the resources, run the following command:
 terraform destroy
 ```
 
+## Architecture
+
+### Network
+
+We're utilizing public and private subnets to ensure that our EKS cluster is not exposed to the internet. The EKS cluster is deployed in the private subnets and the endpoint is only exposed internally, while the public subnets are used for the NAT Gateway and the Internet Gateway. 
+
+In our AWS setup, Network Access Control Lists (NACLs) are configured to bolster security across all subnets in every Availability Zone (AZ), including private subnets, while [Security Groups](./security-groups.tf) control the traffic to the EKS cluster
+
+See the [VPC module documentation](./modules/vpc/README.md) and the [Network section](./modules/eks/README.md) of the EKS module for more information.
+
+### EKS
+
+The EKS cluster is deployed in the private subnets and the endpoint is only exposed internally. The EKS cluster is not exposed to the internet. Instead, we are using a NAT Gateway to allow the EKS cluster to access the internet for updates and other dependencies.
+
+See the [EKS module documentation](./modules/eks/README.md) for more information.
+
 ## DevSecOps
 
 ### Static Code Analysis with Trivy
 
 This project implements some DevSecOps best practices such as [Static Code Analysis](https://owasp.org/www-project-devsecops-guideline/latest/02a-Static-Application-Security-Testing#:~:text=Static%20Code%20Analysis%20or%20Source,Security%20vulnerabilities) with [Trivy](https://aquasecurity.github.io/trivy/v0.46/), prior **tfsec** from [aquasec](https://www.aquasec.com/), to find vulnerabilities and misconfigurations on the Terraform code.
 
-Aquasec has an interesting blog post talking about the nuances between DevOps and DevSecOps, and how to implement DevSecOps in your organization. You can read it [here](https://www.aquasec.com/cloud-native-academy/devsecops/devsecops/).
+Aquasec has an interesting [blog post](https://www.aquasec.com/cloud-native-academy/devsecops/devsecops/) talking about the nuances between DevOps and DevSecOps, and how to implement DevSecOps in your organization.
 
-#### Running Trivy
-
-After installing Trivy in your local machine, you can perform a static code analysis for secrets, vulnerabilities and misconfiguraations by running [trivy fs](https://aquasecurity.github.io/trivy/v0.46/docs/target/filesystem/) command. Vulnerabilities and secrets scanning are enabled by default, but you need to explicitly indicate if you wish to scan for misconfigurations and licenses too. For example:
-
-```bash
-trivy fs --scanners secret, config \
-  -o trivy-scan.json         \ # Defines the output file
-  --severity HIGH, CRITICAL   \ # Filter by severity
-  --tf-vars terraform.tfvars \ # Override variables
-  ./modules/eks \
-```
-
-You can run the commnad for specific files or directories or even the whole project. Read the manual for the complete list of options.
-
-##### Scanning the plan file
-
-It's also a good practice to run Trivy on your plan file, so you can check for vulnerabilities and misconfigurations as they would be. To do so, run the following commands:
-
-```bash
-terraform plan --out tfplan.binary
-terraform show -json tfplan.binary > tfplan.json # Converts the binary plan file to JSON
-trivy config ./tfplan.json -o trivy-plan-scan.json   # Scans the plan file
-```
-
-##### Scannig repositories
-
-It's also always good to verify if there's a secret vulnerability in the remote repository by running:
-
-```
-trivy repo \
---scanners secret \
-https://github.com/guirgouveia/terraform-aws
-```
-
-#### VS Code Plugin
-
-Installing the [Trivy VS Code Plugin](https://marketplace.visualstudio.com/items?itemName=AquaSecurityOfficial.trivy-vulnerability-scanner) to scan your Terraform code directly from VS Code can be very handy.
-
-#### CICD
-
-Run Trivy in your CI pipeline to ensure that your code is secure and free of vulnerabilities and misconfigurations. You can use the [Trivy GitHub Action](https://github.com/marketplace/actions/trivy-action) to do so, or just run the commands above and make sure to fail the pipeline if any vulnerabilities or misconfigurations are found, adding the following flag:
-
-```
-trivy fs --scanners secret, config \
-  ...
-  --exit-code 0
-```
-
-[This blog post](https://blog.aquasec.com/devsecops-with-trivy-github-actions) from Aquasec explains how to use Trivy in your GitHub Actions pipeline.
-
-#### Trivy Tutorials
-
-Refer to the [Trivy tutorials](https://aquasecurity.github.io/trivy/v0.46/tutorials/misconfiguration/terraform/) about Terraform scanning for more information. 
+For more information about Trivy, check the [Trivy Documentation](./docs/trivy.md) I created for this project summarizing it as well as showing some use cases and options.
 
 ### Inputs and Outputs
 

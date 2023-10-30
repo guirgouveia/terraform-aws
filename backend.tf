@@ -8,7 +8,8 @@ terraform {
   }
 }
 
-# If you wish to use the AWS provider block, uncomment the following lines:
+## Uncomment these lines, if you wish
+## to use the AWS provider block to authenticate
 # provider "aws" {
 #   region     = "sa-east-1"
 #   access_key = var.aws_access_key_id

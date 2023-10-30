@@ -60,3 +60,5 @@ client_ip.yaml
 # trunk.io
 .trunk/
 **/.terraform.lock.hcl
+**/*trivy*.json
+**/*plan*.json
